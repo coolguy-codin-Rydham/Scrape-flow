@@ -1,5 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { Suspense } from 'react'
+import { waitFor } from "@/lib/helper/waitFor"
+import { GetWorkflowsForUser } from '@/actions/workflows/getWorkFlowsForUser'
 
 export default function page() {
   return (
@@ -33,3 +35,10 @@ function UserWorkflowsSkeleton() {
         </div>
     )
 }
+
+
+async function UserWorkflows(){
+    const workflows = await GetWorkflowsForUser();
+    return <div></div>;
+    }
+
