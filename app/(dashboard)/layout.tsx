@@ -14,7 +14,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           <div className="gap-3 flex items-center ">
             <ModeToggle />
             <SignedIn>
-              <UserButton/>
+              <UserButton />
             </SignedIn>
           </div>
         </header>

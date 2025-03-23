@@ -55,7 +55,7 @@ const DesktopSidebar = () => {
           return (
             <Link
               key={route.href}
-              href={route.href}
+              href={route.href === "" ? "/" : route.href}
               className={buttonVariants({
                 variant:
                   activeRoute.href === route.href
@@ -119,7 +119,7 @@ export function MobileSidebar() {
         </Sheet>
       </nav>
     </div>
-  )
+  );
 }
 
 export default DesktopSidebar;
