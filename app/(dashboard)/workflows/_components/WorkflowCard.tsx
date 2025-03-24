@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -78,14 +78,23 @@ export default function WorkflowCard({ workflow }: { workflow: Workflow }) {
             <ShuffleIcon size={16} />
             Edit
           </Link>
-          <WorkflowActions workflowName={workflow.name} workflowId={workflow.id} />
+          <WorkflowActions
+            workflowName={workflow.name}
+            workflowId={workflow.id}
+          />
         </div>
       </CardContent>
     </Card>
   );
 }
 
-function WorkflowActions({ workflowName, workflowId }: { workflowName: string, workflowId: string }) {
+function WorkflowActions({
+  workflowName,
+  workflowId,
+}: {
+  workflowName: string;
+  workflowId: string;
+}) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   return (
     <>
@@ -109,14 +118,16 @@ function WorkflowActions({ workflowName, workflowId }: { workflowName: string, w
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-destructive flex items-center gap-2" onSelect={() => {
-            setShowDeleteDialog(prev => !prev)
-          }}>
+          <DropdownMenuItem
+            className="text-destructive flex items-center gap-2"
+            onSelect={() => {
+              setShowDeleteDialog((prev) => !prev);
+            }}
+          >
             <TrashIcon size={16} /> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-
   );
 }

@@ -3,27 +3,36 @@ import { cn } from "@/lib/utils";
 import { useReactFlow } from "@xyflow/react";
 import { ReactNode } from "react";
 function NodeCard({
-    children,
-    nodeId,
-    isSelected,
+  children,
+  nodeId,
+  isSelected,
 }: {
-    nodeId: string;
-    isSelected: boolean;
-    children: ReactNode;
+  nodeId: string;
+  isSelected: boolean;
+  children: ReactNode;
 }) {
-    const {getNode, setCenter}= useReactFlow();
-    return <div onDoubleClick={()=>{
+  const { getNode, setCenter } = useReactFlow();
+  return (
+    <div
+      onDoubleClick={() => {
         const node = getNode(nodeId);
         if (!node) return;
-        const {position,measured}= node;
-        if (!measured||!position) return;
-        
-        const {width,height}= measured;
-        const x =position.x;
-        const y =position.y;
-        if (x===undefined || y===undefined) return;
-        setCenter(x +width!/2,y+height!/2,{zoom:1,duration:500,});
+        const { position, measured } = node;
+        if (!measured || !position) return;
 
-    }} className={cn("rounded-md cursor-pointer bg-background border-2 border-separate w-[420px] text-xs gap-1 flex flex-col",isSelected &&"border-primary")}>{children}</div>;
-};
+        const { width, height } = measured;
+        const x = position.x;
+        const y = position.y;
+        if (x === undefined || y === undefined) return;
+        setCenter(x + width! / 2, y + height! / 2, { zoom: 1, duration: 500 });
+      }}
+      className={cn(
+        "rounded-md cursor-pointer bg-background border-2 border-separate w-[420px] text-xs gap-1 flex flex-col",
+        isSelected && "border-primary",
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 export default NodeCard;
