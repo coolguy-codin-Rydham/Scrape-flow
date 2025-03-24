@@ -23,7 +23,7 @@ const Logo = ({
       </div>
       <div>
         <span className="bg-gradient-to-r from-emerald-500 to-emerald-600 bg-clip-text text-transparent">
-          Flow
+          Easy
         </span>
         <span className="text-stone-700 dark:text-stone-300">Scrape</span>
       </div>
