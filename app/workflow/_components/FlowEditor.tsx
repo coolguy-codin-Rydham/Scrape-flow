@@ -3,7 +3,7 @@
 
 import { TaskType } from "@/types/task";
 import { Workflow } from "@prisma/client";
-import { Background, BackgroundVariant, Controls, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import { Background, BackgroundVariant, Controls, ReactFlow, useEdgesState, useNodesState ,Connection, addEdge,Edge} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import NodeComponent from "./nodes/NodeComponent";
 import { use, useEffect } from "react";
@@ -22,8 +22,8 @@ const fitViewOptions = {
 };
 function FlowEditor({ workflow }: { workflow: Workflow }) {
     const [nodes, setNodes, onNodesChange] = useNodesState<AppNode>([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const {  setViewport, screenToFlowPosition, } = useReactFlow();
+    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+    const {  setViewport, screenToFlowPosition, updateNodeData  } = useReactFlow();
     useEffect(() => {
         try {
           const flow = JSON.parse(workflow.definition);
@@ -55,6 +55,24 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
         },
         [setNodes, screenToFlowPosition]
       );
+
+      const onConnect = useCallback(
+        (connection: Connection) => {
+          setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
+          if (!connection.targetHandle) return;
+          const node = nodes.find((node) => node.id === connection.target);
+          if (!node) return;
+          const nodeInputs = node.data.inputs;
+          updateNodeData(node.id, {
+            inputs: {
+              ...nodeInputs,
+              [connection.targetHandle]: "",
+            },
+          });
+        },
+    
+        [setEdges, updateNodeData, nodes]
+      );
     
 
     return (
@@ -71,6 +89,7 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
                 fitViewOptions={fitViewOptions}
                 onDragOver={onDragOver}
                 onDrop={onDrop}
+                onConnect={onConnect}
 
 
             >
